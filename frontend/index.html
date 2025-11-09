@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌤️ Global Weather+</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌤️</text></svg>">
+</head>
+<body>
+    <div class="app">
+        <div class="container">
+            <!-- Header -->
+            <header class="app-header">
+                <div class="header-top">
+                    <h1 class="app-title">Global Weather+</h1>
+                    <button class="info-btn" id="infoBtn" title="About this app">ℹ️</button>
+                </div>
+                <p class="app-subtitle">Your worldwide weather companion with data export</p>
+                <div class="developer-credit">
+                    Developed by <span class="developer-name">Aadarsh Reddy Depa</span>
+                </div>
+                
+                <div class="header-actions">
+                    <button class="export-toggle-btn" id="exportToggleBtn">
+                        📊 Export Data
+                    </button>
+                    <button class="refresh-btn" id="refreshBtn" title="Refresh stored locations">
+                        🔄
+                    </button>
+                </div>
+            </header>
+
+            <!-- Info Modal -->
+            <div class="modal-overlay" id="infoModal" style="display: none;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>About Weather App</h2>
+                        <button class="modal-close-btn" id="closeInfoModal">✕</button>
+                    </div>
+                    
+                    <div class="modal-body">
+                        <div class="app-info">
+                            <h3>🌤️ Global Weather+</h3>
+                            <p>
+                                A beautiful, feature-rich weather application that provides real-time 
+                                weather data for any location worldwide. Built with modern web technologies 
+                                and designed with user experience in mind.
+                            </p>
+                        </div>
+
+                        <div class="features-list">
+                            <h4>✨ Features:</h4>
+                            <ul>
+                                <li>🌍 Search by city name, postal code, or coordinates</li>
+                                <li>📊 5-day weather forecast</li>
+                                <li>💾 Automatic data storage with MongoDB</li>
+                                <li>📤 Export data in JSON, CSV, XML, PDF, and Markdown</li>
+                                <li>📱 Fully responsive design</li>
+                                <li>🎨 Beautiful, intuitive interface</li>
+                            </ul>
+                        </div>
+
+                        <div class="pm-accelerator-info">
+                            <h4>🚀 About Product Manager Accelerator</h4>
+                            <p>
+                                <strong>Product Manager Accelerator</strong> is dedicated to empowering 
+                                the next generation of product leaders through comprehensive training, 
+                                mentorship, and real-world experience.
+                            </p>
+                            
+                            <div class="pm-highlights">
+                                <div class="highlight-item">
+                                    <span class="highlight-icon">🎯</span>
+                                    <span>Product Management Training</span>
+                                </div>
+                                <div class="highlight-item">
+                                    <span class="highlight-icon">💡</span>
+                                    <span>Career Acceleration</span>
+                                </div>
+                                <div class="highlight-item">
+                                    <span class="highlight-icon">🤝</span>
+                                    <span>Industry Mentorship</span>
+                                </div>
+                                <div class="highlight-item">
+                                    <span class="highlight-icon">🌐</span>
+                                    <span>Global Community</span>
+                                </div>
+                            </div>
+
+                            <div class="social-links">
+                                <a href="https://www.linkedin.com/school/pmaccelerator" 
+                                   target="_blank" rel="noopener noreferrer" class="linkedin-link">
+                                    🔗 Visit our LinkedIn Page
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="technical-info">
+                            <h4>🛠️ Technical Stack:</h4>
+                            <div class="tech-stack">
+                                <span class="tech-item">HTML5</span>
+                                <span class="tech-item">CSS3</span>
+                                <span class="tech-item">JavaScript</span>
+                                <span class="tech-item">Node.js</span>
+                                <span class="tech-item">MongoDB Atlas</span>
+                                <span class="tech-item">OpenWeather API</span>
+                            </div>
+                        </div>
+
+                        <div class="developer-info">
+                            <p><strong>Developed by:</strong> Aadarsh Reddy Depa</p>
+                            <p class="app-version">Version 2.0</p>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button class="modal-ok-btn" id="modalOkBtn">Got it!</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Export Panel -->
+            <div class="export-panel" id="exportPanel" style="display: none;">
+                <div class="export-header">
+                    <h3>📊 Export Weather Data</h3>
+                    <button class="close-btn" id="closeExportPanel">✕</button>
+                </div>
+
+                <div class="export-controls">
+                    <div class="form-group">
+                        <label>Format:</label>
+                        <select id="exportFormat">
+                            <option value="json">JSON</option>
+                            <option value="csv">CSV</option>
+                            <option value="xml">XML</option>
+                            <option value="pdf">PDF</option>
+                            <option value="markdown">Markdown</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Start Date:</label>
+                        <input type="date" id="startDate" max="">
+                    </div>
+
+                    <div class="form-group">
+                        <label>End Date:</label>
+                        <input type="date" id="endDate" max="">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Location (Optional):</label>
+                        <select id="selectedLocation">
+                            <option value="">All Locations</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="export-actions">
+                    <button class="export-btn" id="exportBtn">Export as JSON</button>
+                    <button class="test-btn" id="testExportBtn" type="button">Test Connection</button>
+                </div>
+
+                <div class="export-tips">
+                    <p>💡 <strong>Tips:</strong></p>
+                    <ul>
+                        <li>Select both start and end dates for export</li>
+                        <li>JSON/CSV are best for data analysis</li>
+                        <li>PDF is great for reports</li>
+                        <li>Use location filter for specific cities</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Search Section -->
+            <section class="search-section">
+                <form class="search-bar" id="searchForm">
+                    <div class="search-container">
+                        <input type="text" id="searchInput" placeholder="Search by city, postal code, or coordinates..." class="search-input">
+                        <button type="submit" class="search-button">🔍</button>
+                    </div>
+                </form>
+
+                <div class="search-examples">
+                    <p class="examples-title">Try these examples:</p>
+                    <div class="example-buttons">
+                        <button class="example-btn" data-search="London">🌆 London</button>
+                        <button class="example-btn" data-search="New York">🗽 New York</button>
+                        <button class="example-btn" data-search="Tokyo">🗼 Tokyo</button>
+                        <button class="example-btn" data-search="Paris">🗼 Paris</button>
+                        <button class="example-btn" data-search="Sydney">🦘 Sydney</button>
+                    </div>
+                    
+                    <div class="example-buttons">
+                        <button class="example-btn" data-search="110001,IN">🇮🇳 Delhi Pincode</button>
+                        <button class="example-btn" data-search="90210,US">🇺🇸 US Zip Code</button>
+                        <button class="example-btn" data-search="48.8566,2.3522">📍 Coordinates</button>
+                    </div>
+
+                    <div class="search-tips">
+                        <small>
+                            💡 <strong>Tips:</strong> For better accuracy, use "City, Country" format like "London, UK" or "Paris, FR"
+                        </small>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Loading Spinner -->
+            <div class="loading-container" id="loadingSpinner" style="display: none;">
+                <div class="loading-spinner">
+                    <div class="cloud"></div>
+                    <div class="sun"></div>
+                </div>
+                <p>Fetching weather data...</p>
+            </div>
+
+            <!-- Error Message -->
+            <div class="error-message" id="errorMessage" style="display: none;">
+                <div id="errorText"></div>
+                <div class="error-suggestion">
+                    💡 Try: "London, UK", "110001,IN", or "48.8566,2.3522"
+                </div>
+            </div>
+
+            <!-- Weather Display -->
+            <div id="weatherDisplay" style="display: none;">
+                <!-- Weather Card and Forecast will be inserted here by JavaScript -->
+            </div>
+
+            <!-- Search History -->
+            <div class="search-history" id="searchHistory" style="display: none;">
+                <div class="history-header">
+                    <h3>Recent Searches</h3>
+                    <span class="history-count" id="historyCount">0 searches</span>
+                </div>
+                <div class="history-list" id="historyList">
+                    <!-- History items will be inserted here -->
+                </div>
+            </div>
+
+            <!-- Stored Locations -->
+            <div class="stored-locations" id="storedLocations" style="display: none;">
+                <div class="locations-header">
+                    <h3>📁 Stored Locations</h3>
+                    <span class="locations-count" id="locationsCount">0 locations in database</span>
+                </div>
+                <div class="locations-grid" id="locationsGrid">
+                    <!-- Location cards will be inserted here -->
+                </div>
+            </div>
+
+            <!-- Backend Status -->
+            <div class="backend-status">
+                <div class="status-indicator offline" id="statusIndicator">●</div>
+                <span class="status-text" id="statusText">Backend Offline - Data not being stored</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
