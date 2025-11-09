@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use('/api/weather', require('./routes/weatherRoutes'));
+app.use('/api/weather', require('/routes/weatherRoutes'));
 app.use('/api/export', require('./routes/exportRoutes'));
 
 // MongoDB Atlas connection with better error handling
